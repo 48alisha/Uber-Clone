@@ -278,6 +278,102 @@ POST /user/login
 
 ---
 
+#### Get User Profile
+```
+GET /user/profile
+```
+
+**Headers Required:**
+```
+Authorization: Bearer <jwt_token>
+```
+
+**Requirements:**
+- Must be authenticated with a valid JWT token
+- Token can be sent via Authorization header or cookie
+
+**Success Response (200 OK):**
+```json
+{
+  "_id": "user_id",
+  "fullname": {
+    "firstname": "John",
+    "lastname": "Doe"
+  },
+  "email": "john@example.com",
+  "socketId": null
+}
+```
+
+**Error Responses:**
+
+1. **Unauthorized (401 Unauthorized):**
+```json
+{
+  "message": "Unauthorized"
+}
+```
+
+2. **Missing Token:**
+```json
+{
+  "message": "No token provided"
+}
+```
+
+**What This Does:**
+- Retrieves the profile information of the currently logged-in user
+- Returns user details from the database
+- Requires valid authentication token
+
+---
+
+#### Logout User
+```
+GET /user/logout
+```
+
+**Headers Required:**
+```
+Authorization: Bearer <jwt_token>
+```
+
+**Requirements:**
+- Must be authenticated with a valid JWT token
+- Token will be added to blacklist to prevent future use
+
+**Success Response (200 OK):**
+```json
+{
+  "message": "Logged out"
+}
+```
+
+**Error Responses:**
+
+1. **Unauthorized (401 Unauthorized):**
+```json
+{
+  "message": "Unauthorized"
+}
+```
+
+2. **Missing Token:**
+```json
+{
+  "message": "No token provided"
+}
+```
+
+**Logout Process:**
+1. User sends logout request with valid token
+2. Token is added to blacklist in database
+3. Cookie is cleared from browser
+4. Token becomes invalid for future requests
+5. User must login again to access protected routes
+
+---
+
 ## 📁 Project Structure
 
 ```
