@@ -11,6 +11,7 @@ module.exports.createCaptain = async ({
     vehicleType
 }) => {
 
+    // basic required check
     if (
         !firstname ||
         !email ||
@@ -25,18 +26,18 @@ module.exports.createCaptain = async ({
 
     const captain = await captainModel.create({
         fullname: {
-            firstname,
-            lastname
+            firstname: firstname,
+            lastname: lastname || ""   // prevent undefined
         },
-        email,
-        password,
+        email: email,
+        password: password,
         vehicle: {
-            color,
-            plate,
-            capacity,
-            vehicleType
+            color: color,
+            plate: plate,
+            capacity: capacity,
+            vehicleType: vehicleType
         }
-    }); 
+    });
 
     return captain;
 };
